@@ -13,20 +13,35 @@ keystone.init({
 
 	'name': 'sigman.pl',
 	'brand': 'sigman.pl',
-	
+
 	'less': 'public',
 	'static': 'public',
 	'favicon': 'public/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'jade',
-	
+
 	'emails': 'templates/emails',
-	
+
 	'auto update': true,
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': '*WiIF3T-0w:2XJ-[H{WSc+7WA-_eIqS`8%E_RSqIt4(yo}QTw2l`Fbh_WZL9?g"G'
+	'cookie secret': '*WiIF3T-0w:2XJ-[H{WSc+7WA-_eIqS`8%E_RSqIt4(yo}QTw2l`Fbh_WZL9?g"G',
+
+	'wysiwyg additional plugins': 'insertdatetime',
+	'wysiwyg additional buttons': 'insertdatetime'//,
+
+	// 'wysiwyg override toolbar': false,
+	// 'wysiwyg menubar': true,
+	// 'wysiwyg skin': 'lightgray',
+	// 'wysiwyg additional buttons': 'searchreplace visualchars,'
+	// 	 + ' charmap ltr rtl pagebreak paste, forecolor backcolor,'
+	// 	 +' emoticons media, preview print ',
+	// 'wysiwyg additional plugins': 'example, table, advlist, anchor,'
+	// 	 + ' autolink, autosave, bbcode, charmap, contextmenu, '
+	// 	 + ' directionality, emoticons, fullpage, hr, media, pagebreak,'
+	// 	 + ' paste, preview, print, searchreplace, textcolor,'
+	// 	 + ' visualblocks, visualchars, wordcount'
 
 });
 

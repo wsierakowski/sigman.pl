@@ -8,7 +8,8 @@
  * modules in your project's /lib directory.
  */
 
-var _ = require('underscore');
+var _ = require('underscore'),
+		keystone = require('keystone');
 
 
 /**
@@ -23,15 +24,31 @@ exports.initLocals = function(req, res, next) {
 	
 	var locals = res.locals;
 	
-	locals.navLinks = [
-		{ label: 'Home',		key: 'home',		href: '/' },
-		{ label: 'Blog',		key: 'blog',		href: '/blog' },
-		{ label: 'Contact',		key: 'contact',		href: '/contact' }
-	];
+	locals.navLinks = [];
+
+//---------------------------------------------------------------------//////////////////
+	keystone.list('PostCategory').model.find().sort('name').exec(function(err, categories) {
+		if (err || !categories.length) {
+			return next(err);
+		}
+
+		_.each(categories, function(cat) {
+			locals.navLinks.push({ label: cat.name, key: cat.key, href: '/' + cat.key });
+		});
+
+		locals.navLinks.push({ label: 'About',		key: 'about',		href: '/about' });
+
+		locals.user = req.user;
+		next();
+
+	});
+//---------------------------------------------------------------------//////////////////
+		//{ label: 'Home',		key: 'home',		href: '/' },
+		//{ label: 'Blog',		key: 'blog',		href: '/blog' },
 	
-	locals.user = req.user;
+		//{ label: 'Contact',		key: 'contact',		href: '/contact' }
+		
 	
-	next();
 	
 };
 
