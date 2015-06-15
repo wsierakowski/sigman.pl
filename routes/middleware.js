@@ -23,12 +23,16 @@ var _ = require('underscore'),
 exports.initLocals = function(req, res, next) {
 	
 	var locals = res.locals;
+
+	locals.curYear = new Date().getFullYear().toString();
+	locals.title = keystone.get('name');
 	
 	locals.navLinks = [];
+	locals.navLinks.push({ label: 'Latests',		key: 'latests',		href: '/' });
 
 //---------------------------------------------------------------------//////////////////
 	keystone.list('PostCategory').model.find().sort('name').exec(function(err, categories) {
-		if (err || !categories.length) {
+		if (err) {
 			return next(err);
 		}
 

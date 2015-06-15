@@ -1,0 +1,41 @@
+//- Customise your site's navigation by changing the navLinks Array in ./routes/middleware.js
+//- ... or completely change this header to suit your design.
+
+header.navbar.navbar-inverse.navbar-fixed-top.bs-docs-nav(role="banner")
+	.container
+		.navbar-header
+			button.navbar-toggle(type="button", data-toggle="collapse" data-target=".bs-navbar-collapse")
+				span.sr-only Toggle navigation
+				span.icon-bar
+				span.icon-bar
+				span.icon-bar
+			a.navbar-brand(href='/') #{title}
+		nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
+			form.navbar-form.navbar-right(role="search")
+				.form-group
+					input(type="text", class="form-control", placeholder="Search")
+				button(type="submit", class="btn btn-default") Search
+			ul.nav.navbar-nav
+				each link in navLinks
+					li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
+
+//- div(role="navigation").navbar.navbar-default
+//- 	.container-fluid
+//- 		.navbar-header
+//- 			button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+//- 				span.sr-only Toggle navigation
+//- 				span.icon-bar
+//- 				span.icon-bar
+//- 				span.icon-bar
+//- 			a.navbar-brand(href='/') sigman.pl
+//- 		.collapse.navbar-collapse
+//- 			ul.nav.navbar-nav.navbar-left
+//- 				each link in navLinks
+//- 					li(class=(section == link.key ? 'active' : null)): a(href=link.href)= link.label
+//- 			ul.nav.navbar-nav.navbar-right
+//- 				if user
+//- 					if user.canAccessKeystone
+//- 						li: a(href='/keystone') Open Keystone
+//- 					li: a(href='/keystone/signout') Sign Out
+//- 				else
+//- 					li: a(href='/keystone/signin') Sign In
