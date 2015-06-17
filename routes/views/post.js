@@ -10,9 +10,8 @@ exports = module.exports = function(req, res) {
 	locals.filters = {
 		post: req.params.post
 	};
-	locals.data = {
-		posts: []
-	};
+	locals.data = locals.data || {};
+	locals.data.posts = [];
 	
 	// Load the current post
 	view.on('init', function(next) {
@@ -45,3 +44,5 @@ exports = module.exports = function(req, res) {
 	view.render('post');
 	
 };
+
+

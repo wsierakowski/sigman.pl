@@ -9,7 +9,8 @@
  */
 
 var _ = require('underscore'),
-		keystone = require('keystone');
+	async = require('async'),
+	keystone = require('keystone');
 
 
 /**
@@ -21,12 +22,14 @@ var _ = require('underscore'),
 */
 
 exports.initLocals = function(req, res, next) {
+
+	req.flash('info', 'Some information!');
 	
 	var locals = res.locals;
 
 	locals.curYear = new Date().getFullYear().toString();
 	locals.title = keystone.get('name');
-	
+
 	locals.navLinks = [];
 	locals.navLinks.push({ label: 'Latests',		key: 'latests',		href: '/' });
 
@@ -90,4 +93,29 @@ exports.requireUser = function(req, res, next) {
 		next();
 	}
 	
+};
+
+exports.fetchCategories = function(req, res, next) {
+
+	var locals = res.locals;
+	locals.data = locals.data || {};
+	locals.data.categories = [];
+
+	keystone.list('PostCategory').model.find().sort('name').exec(function(err, results) {
+		if (err) {
+			return next(err);
+		}
+
+		locals.data.categories = results;
+
+		// Load the counts for each category
+		async.each(locals.data.categories, function(category, cb) {
+			keystone.list('Post').model.count().where('categories').in([category.id]).exec(function(err, count) {
+				category.postCount = count;
+				cb(err);
+			});
+		}, function(err) {
+			next(err);
+		});
+	});
 };
