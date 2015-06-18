@@ -1,30 +1,72 @@
 extends ../layouts/default
 
 mixin post(post)
-	.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
-		h2: a(href=blogurl + '/post/' + post.slug)= post.title
-		p.lead.text-muted Posted 
-			if post.publishedDate
-				| on #{post._.publishedDate.format('MMMM Do, YYYY')} 
-			if post.categories && post.categories.length
-				| in 
-				each cat, i in post.categories
-					a(href=blogurl + '/' + cat.key)= cat.name
-					if i < post.categories.length - 1
-						| , 
-					else
-						|  
-			if post.author
-				| by #{post.author.name.first}
-		if post.image.exists
-			img(src=post._.image.fit(160,160)).img.pull-right
-		p!= post.content.brief
-		if post.content.extended
-			p.read-more: a(href=blogurl + '/post/' + post.slug) Read more...
+	article
+		.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
+			h2: a(href=blogurl + '/post/' + post.slug)= post.title
+			.row
+				.group1.col-sm-6.col-md-6
+					if post.publishedDate
+						span.glyphicon.glyphicon-time 
+						|  #{post._.publishedDate.format('MMMM Do, YYYY')}  
+					if post.author
+						span.glyphicon.glyphicon-user 
+						|  by #{post.author.name.first} 
+				.group1.col-sm-6.col-md-6
+					if post.categories && post.categories.length
+						span.glyphicon.glyphicon-folder-open 
+						| &nbsp;&nbsp;
+						each cat, i in post.categories
+							a(href=blogurl + '/' + cat.key)= cat.name
+							if i < post.categories.length - 1
+								| , 
+							else
+								| 
+						span.glyphicon.glyphicon-bookmark 
+						|  no tags
+
+			hr
+
+			//- TODO: Make sure brief doesn't have html and it is short and it will become real brief
+			//- then we can pring first x number of words for the extended and then continue reading...
+			.brief
+				if post.image.exists
+					img(src=post._.image.fit(160,160)).img.pull-right
+				p.lead!= post.content.brief
+			//- p.lead
+			//- 	| #{post.content.brief}
+
+			if post.content.extended
+				//- p.read-more: a(href=blogurl + '/post/' + post.slug) Read more...
+				p.text-right
+					a.text-right(href=blogurl + '/post/' + post.slug) continue reading...
+
+//- mixin post(post)
+//- 	article
+//- 		.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
+//- 			h2: a(href=blogurl + '/post/' + post.slug)= post.title
+//- 			p.lead.text-muted Posted 
+//- 				if post.publishedDate
+//- 					| on #{post._.publishedDate.format('MMMM Do, YYYY')} 
+//- 				if post.categories && post.categories.length
+//- 					| in 
+//- 					each cat, i in post.categories
+//- 						a(href=blogurl + '/' + cat.key)= cat.name
+//- 						if i < post.categories.length - 1
+//- 							| , 
+//- 						else
+//- 							|  
+//- 				if post.author
+//- 					| by #{post.author.name.first}
+//- 			if post.image.exists
+//- 				img(src=post._.image.fit(160,160)).img.pull-right
+//- 			p!= post.content.brief
+//- 			if post.content.extended
+//- 				p.read-more: a(href=blogurl + '/post/' + post.slug) Read more...
 
 block intro
-	.container
-		h1= data.category ? data.category.name : 'Blog'
+	//- .container
+	//- 	h2= data.category ? data.category.name : 'Latest Posts'
 
 block content
 	.container: .row
@@ -32,9 +74,10 @@ block content
 			if filters.category && !data.category
 				h3.text-muted Invalid Category.
 			else
+				h2= data.category ? data.category.name : 'Latest Posts'
 				if data.posts.results.length
 					if data.posts.totalPages > 1
-						h4.text-weight-normal Showing 
+						h5.text-weight-normal Showing 
 							strong #{data.posts.first}
 							|  to 
 							strong #{data.posts.last}

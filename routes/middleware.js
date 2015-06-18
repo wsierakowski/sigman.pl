@@ -22,8 +22,6 @@ var _ = require('underscore'),
 */
 
 exports.initLocals = function(req, res, next) {
-
-	req.flash('info', 'Some information!');
 	
 	var locals = res.locals;
 
