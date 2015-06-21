@@ -29,7 +29,7 @@ exports.initLocals = function(req, res, next) {
 	locals.title = keystone.get('name');
 
 	locals.navLinks = [];
-	locals.navLinks.push({ label: 'Latests',		key: 'latests',		href: '/' });
+	locals.navLinks.push({ label: 'Latests',    key: 'latests',   href: '/' });
 
 //---------------------------------------------------------------------//////////////////
 	keystone.list('PostCategory').model.find().sort('name').exec(function(err, categories) {
@@ -41,17 +41,17 @@ exports.initLocals = function(req, res, next) {
 			locals.navLinks.push({ label: cat.name, key: cat.key, href: '/' + cat.key });
 		});
 
-		locals.navLinks.push({ label: 'About',		key: 'about',		href: '/about' });
+		locals.navLinks.push({ label: 'About',    key: 'about',   href: '/about' });
 
 		locals.user = req.user;
 		next();
 
 	});
 //---------------------------------------------------------------------//////////////////
-		//{ label: 'Home',		key: 'home',		href: '/' },
-		//{ label: 'Blog',		key: 'blog',		href: '/blog' },
+		//{ label: 'Home',    key: 'home',    href: '/' },
+		//{ label: 'Blog',    key: 'blog',    href: '/blog' },
 	
-		//{ label: 'Contact',		key: 'contact',		href: '/contact' }
+		//{ label: 'Contact',   key: 'contact',   href: '/contact' }
 		
 	
 	
@@ -115,5 +115,21 @@ exports.fetchCategories = function(req, res, next) {
 		}, function(err) {
 			next(err);
 		});
+	});
+};
+
+// Load the posts
+exports.fetchLatestPosts = function(req, res, next) {
+	var locals = res.locals,
+		q = keystone.list('Post').model
+		.find()
+		.where('state', 'published')
+		.limit(5)
+		.sort('-publishedDate')
+		.select('slug title');
+
+	q.exec(function(err, results) {
+		locals.data.latestPosts = results;
+		next(err);
 	});
 };
