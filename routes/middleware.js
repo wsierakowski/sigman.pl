@@ -118,6 +118,31 @@ exports.fetchCategories = function(req, res, next) {
 	});
 };
 
+exports.fetchTags = function(req, res, next) {
+
+	var locals = res.locals;
+	locals.data = locals.data || {};
+	locals.data.tags = [];
+
+	keystone.list('PostTag').model.find().sort('name').exec(function(err, results) {
+		if (err) {
+			return next(err);
+		}
+
+		locals.data.tags = results;
+
+		// Load the counts for each tag
+		async.each(locals.data.tags, function(tag, cb) {
+			keystone.list('Post').model.count().where('tags').in([tag.id]).exec(function(err, count) {
+				tag.postCount = count;
+				cb(err);
+			});
+		}, function(err) {
+			next(err);
+		});
+	});
+};
+
 // Load the posts
 exports.fetchLatestPosts = function(req, res, next) {
 	var locals = res.locals,

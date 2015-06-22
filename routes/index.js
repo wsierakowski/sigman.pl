@@ -43,12 +43,14 @@ exports = module.exports = function(app) {
 	app.get(
 		'/post/:post', 
 		middleware.fetchCategories, 
+		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.post
 	);
 	app.get(
 		'/:category?', 
 		middleware.fetchCategories, 
+		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.blog
 	);
