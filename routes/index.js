@@ -54,6 +54,14 @@ exports = module.exports = function(app) {
 		middleware.fetchLatestPosts, 
 		routes.views.blog
 	);
+	app.get(
+		'/tags/:tag?', 
+		middleware.fetchCategories, 
+		middleware.fetchTags, 
+		middleware.fetchLatestPosts, 
+		routes.views.blog
+	);
+
 	
 	//app.all('/contact', routes.views.contact);
 	

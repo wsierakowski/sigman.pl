@@ -56,10 +56,15 @@ block intro
 block content
 	.container: .row
 		.col-sm-8.col-md-9
-			if filters.category && !data.category
+			if filters.category && !data.category && !filters.tag
 				h3.text-muted Invalid Category.
+			else if filters.tag && !data.tag && !filters.category
+				h3.text-muted Invalid Tag.
 			else
-				h2= data.category ? data.category.name : 'Latest Posts'
+				- var cat = data.category ? data.category.name : null
+				- var tag = data.tag ? data.tag.name : null
+				- var catOrTag = cat || tag
+				h2= cat || tag || 'Latest Posts'
 				if data.posts.results.length
 					if data.posts.totalPages > 1
 						h5.text-weight-normal Showing 
@@ -91,9 +96,10 @@ block content
 				else
 					if data.category
 						h3.text-muted There are no posts in the category #{data.category.name}.
+					else if data.tag
+						h3.text-muted There are no posts for the tag #{data.tag.name}.
 					else
 						h3.text-muted There are no posts yet.
 		
-		if data.categories.length
-			.col-sm-4.col-md-3
-				include ../mixins/side-panels
+		.col-sm-4.col-md-3
+			include ../mixins/side-panels
