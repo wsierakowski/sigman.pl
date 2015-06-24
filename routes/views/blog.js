@@ -57,9 +57,6 @@ exports = module.exports = function(req, res) {
 		}
 
 		q.exec(function(err, results) {
-			// console.log('--------------------');
-			// console.log('cats or tags?', locals.data.category, locals.data.tag);
-			// console.log('results:', results);
 			locals.data.posts = results;
 			next(err);
 		});

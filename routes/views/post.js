@@ -22,6 +22,10 @@ exports = module.exports = function(req, res) {
 		}).populate('author categories');
 		
 		q.exec(function(err, result) {
+			// console.log('>>> result.content.brief: ', result.content.brief);
+			// console.log('>>> result.content.extended: ', result.content.extended);
+			// TODO content.full === content.extended which is obviously wrong as it is missing brief
+			// console.log('>>> result.content.full: ', result.content.full);
 			locals.data.post = result;
 			next(err);
 		});
