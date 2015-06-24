@@ -20,6 +20,7 @@
 
 var keystone = require('keystone'),
 	middleware = require('./middleware'),
+	myUtils = require('../libs/myutils'),
 	importRoutes = keystone.importer(__dirname);
 
 // Common Middleware
@@ -38,30 +39,33 @@ exports = module.exports = function(app) {
 	// app.get('/', routes.views.index);
 	// app.get('/blog/:category?', routes.views.blog);
 	// app.get('/blog/post/:post', routes.views.post);
+	var urls = keystone.get('locals').urls;
 	
 	app.get('/about', routes.views.about);
 	app.get(
-		'/:post', 
+		//'/:post', 
+		myUtils.getUrl(urls.blog, urls.posts, ':post?'),
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.post
 	);
 	app.get(
-		'/categories/:category?', 
+		//'/categories/:category?', 
+		myUtils.getUrl(urls.blog, urls.categories, ':category?'),
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.blog
 	);
 	app.get(
-		'/tags/:tag?', 
+		//'/tags/:tag?', 
+		myUtils.getUrl(urls.blog, urls.tags, ':tag?'),
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.blog
 	);
-
 	
 	//app.all('/contact', routes.views.contact);
 	

@@ -3,7 +3,8 @@
 require('dotenv').load();
 
 // Require keystone
-var keystone = require('keystone');
+var keystone = require('keystone'),
+		myUtils = require('./libs/myutils');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
@@ -57,7 +58,14 @@ keystone.set('locals', {
 	_: require('underscore'),
 	env: keystone.get('env'),
 	utils: keystone.utils,
-	editable: keystone.content.editable
+	editable: keystone.content.editable,
+	urls: {
+		blog: '/',
+		categories: '',
+		posts: 'posts',
+		tags: 'tags'
+	},
+	myUtils: myUtils
 });
 
 // Load your project's Routes

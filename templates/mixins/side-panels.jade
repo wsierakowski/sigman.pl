@@ -12,17 +12,19 @@
 	ul.list-group
 		each post, i in data.latestPosts
 			li.list-group-item
-				a(href=blogurl + '/post/' + post.slug) #{i+1}. #{post.title}
+				//- TODO a(href=blogurl + '/post/' + post.slug) #{i+1}. #{post.title}
+				a(href=myUtils.getUrl(urls.blog, urls.posts, post.slug)) #{i+1}. #{post.title}
 
 if data.categories.length
 	.panel.panel-default
 		.panel-heading
 			h4.panel-title Categories
 		ul.list-group
-			a(href=blogurl + '/', class=!data.category ? 'active' : false).list-group-item All
+			//-  TODO a(href=blogurl + '/', class=!data.category ? 'active' : false).list-group-item All
+			a(href=myUtils.getUrl(urls.blog, urls.categories), class=!data.category ? 'active' : false).list-group-item All
 			each cat in data.categories
-				//- a(href=blogurl + '/' + cat.key, class=data.category && data.category.id == cat.id ? 'active' : false).list-group-item= cat.name
-				a(href=blogurl + '/' + cat.key, class=data.category && data.category.id == cat.id ? 'active' : false).list-group-item #{cat.name} (#{cat.postCount})
+				//- TODO (href=blogurl + '/' + cat.key, class=data.category && data.category.id == cat.id ? 'active' : false).list-group-item= cat.name
+				a(href=myUtils.getUrl(urls.blog, urls.categories, cat.key), class=data.category && data.category.id == cat.id ? 'active' : false).list-group-item #{cat.name} (#{cat.postCount})
 
 if data.tags.length
 	.panel.panel-default
@@ -31,4 +33,5 @@ if data.tags.length
 		.panel-body
 			ul.list-inline
 				each tag in data.tags
-					li: a(href=blogurl + '/tags/' + tag.key) #{tag.name} (#{tag.postCount})
+					//-  TODO li: a(href=blogurl + '/tags/' + tag.key) #{tag.name} (#{tag.postCount})
+					li: a(href=myUtils.getUrl(urls.blog, urls.tags, tag.key)) #{tag.name} (#{tag.postCount})

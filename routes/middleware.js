@@ -10,7 +10,8 @@
 
 var _ = require('underscore'),
 	async = require('async'),
-	keystone = require('keystone');
+	keystone = require('keystone'),
+	myUtils = require('../libs/myutils');
 
 
 /**
@@ -28,8 +29,11 @@ exports.initLocals = function(req, res, next) {
 	locals.curYear = new Date().getFullYear().toString();
 	locals.title = keystone.get('name');
 
+	var urls = keystone.get('locals').urls;
 	locals.navLinks = [];
-	locals.navLinks.push({ label: 'Latests',    key: 'latests',   href: '/' });
+	locals.navLinks.push({ 
+		label: 'Latests', key: 'latests', href: myUtils.getUrl(urls.blog, urls.categories) 
+	});
 
 //---------------------------------------------------------------------//////////////////
 	keystone.list('PostCategory').model.find().sort('name').exec(function(err, categories) {
@@ -38,10 +42,14 @@ exports.initLocals = function(req, res, next) {
 		}
 
 		_.each(categories, function(cat) {
-			locals.navLinks.push({ label: cat.name, key: cat.key, href: '/' + cat.key });
+			locals.navLinks.push({ 
+				label: cat.name, 
+				key: cat.key, 
+				href: myUtils.getUrl(urls.blog, urls.categories, cat.key) 
+			});
 		});
 
-		locals.navLinks.push({ label: 'About',    key: 'about',   href: '/about' });
+		locals.navLinks.push({ label: 'About',    key: 'about',   href: myUtils.getUrl(urls.blog, 'about') });
 
 		locals.user = req.user;
 		next();
