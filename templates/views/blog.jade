@@ -17,7 +17,7 @@ mixin post(post)
 						span.glyphicon.glyphicon-folder-open 
 						| &nbsp;&nbsp;
 						each cat, i in post.categories
-							a(href=blogurl + '/categories' + cat.key)= cat.name
+							a(href=blogurl + '/categories/' + cat.key)= cat.name
 							if i < post.categories.length - 1
 								| , 
 							else
@@ -26,8 +26,7 @@ mixin post(post)
 						span.glyphicon.glyphicon-bookmark 
 						| &nbsp;&nbsp;
 						each tag, i in post.tags
-							//- a(href=blogurl + '/tags' + tag.key)= tag.name
-							span= tag.name
+							a(href=blogurl + '/tags/' + tag.key)= tag.name
 							if i < post.tags.length - 1
 								| , 
 							else
@@ -61,9 +60,8 @@ block content
 			else if filters.tag && !data.tag && !filters.category
 				h3.text-muted Invalid Tag.
 			else
-				- var cat = data.category ? data.category.name : null
-				- var tag = data.tag ? data.tag.name : null
-				- var catOrTag = cat || tag
+				- var cat = data.category ? 'Category:' + data.category.name : null
+				- var tag = data.tag ? 'Tag: ' + data.tag.name : null
 				h2= cat || tag || 'Latest Posts'
 				if data.posts.results.length
 					if data.posts.totalPages > 1

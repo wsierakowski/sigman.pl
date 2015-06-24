@@ -41,14 +41,14 @@ exports = module.exports = function(app) {
 	
 	app.get('/about', routes.views.about);
 	app.get(
-		'/post/:post', 
+		'/:post', 
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
 		routes.views.post
 	);
 	app.get(
-		'/:category?', 
+		'/categories/:category?', 
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
