@@ -45,7 +45,10 @@ mixin post(isBlogArticle, post)
 			//- then we can pring first x number of words for the extended and then continue reading...
 			.brief
 				if post.image.exists
-					img(src=post._.image.fit(160,160)).img.pull-right
+					if isBlogArticle
+						img(src=post._.image.fit(160,160)).img.pull-right
+					else
+						.image-wrap: img(src=data.post._.image.fit(750,450)).img-responsive
 				p.lead!= post.content.brief
 			//- p.lead
 			//- 	| #{post.content.brief}
@@ -53,8 +56,8 @@ mixin post(isBlogArticle, post)
 			if post.content.extended
 				if isBlogArticle
 					//- p.read-more: a(href=blogurl + '/post/' + post.slug) Read more...
-					p.text-right
+					p.post.text-right
 						//- TODO a.text-right(href=blogurl + '/post/' + post.slug) continue reading...
-						a.text-right(href=myUtils.getUrl(urls.blog, urls.post, post.slug)) continue reading...
+						a.text-right(href=myUtils.getUrl(urls.blog, urls.posts, post.slug)) continue reading...
 				else
 					.post!= post.content.full
