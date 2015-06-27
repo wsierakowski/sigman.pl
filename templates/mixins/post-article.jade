@@ -53,11 +53,11 @@ mixin post(isBlogArticle, post)
 			//- p.lead
 			//- 	| #{post.content.brief}
 
-			if post.content.extended
+			if post.content.isExtended
 				if isBlogArticle
 					//- p.read-more: a(href=blogurl + '/post/' + post.slug) Read more...
 					p.post.text-right
 						//- TODO a.text-right(href=blogurl + '/post/' + post.slug) continue reading...
 						a.text-right(href=myUtils.getUrl(urls.blog, urls.posts, post.slug)) continue reading...
 				else
-					.post!= post.content.full
+					.post!= post.content.getExtended
