@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+var keystone = require('keystone'),
+		myUtils = require('../../libs/myutils');
 
 exports = module.exports = function(req, res) {
 
@@ -10,7 +11,8 @@ exports = module.exports = function(req, res) {
 	locals.section = 'blog';
 	locals.filters = {
 		category: req.params.category,
-		tag: req.params.tag
+		tag: req.params.tag,
+		search: req.query.search
 	};
 
 	locals.data = locals.data || {};
@@ -43,7 +45,7 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		var q = keystone.list('Post').paginate({
 				page: req.query.page || 1,
-				perPage: 10,
+				perPage: locals.filters.search ? 100 : 10,
 				maxPages: 10
 			})
 			.where('state', 'published')
@@ -54,6 +56,18 @@ exports = module.exports = function(req, res) {
 			q.where('categories').in([locals.data.category]);
 		} else if (locals.data.tag) {
 			q.where('tags').in([locals.data.tag]);
+		}
+
+		// This is a temporary implementation, once we upgrade to the latest mongodb
+		// we will use the mongo's built in full text search.
+		if (locals.filters.search) {
+			q.where({$or: [
+				{'title': new RegExp(locals.filters.search, 'i')},
+				{'content.brief': new RegExp(locals.filters.search, 'i')},
+				{$and: [{'content.extendedType': 'html'}, {'content.extendedHTML': new RegExp(locals.filters.search, 'i')}]},
+				{$and: [{'content.extendedType': 'markdown'}, {'content.extendedMarkdown.html': new RegExp(locals.filters.search, 'i')}]},
+				{$and: [{'content.extendedType': 'jade'}, {'content.extendedJade': new RegExp(locals.filters.search, 'i')}]}
+			]});
 		}
 
 		q.exec(function(err, results) {

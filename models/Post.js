@@ -38,7 +38,7 @@ Post.schema.virtual('content.isExtended').get(function() {
 					this.content.extendedType ===  'jade' && !!this.content.extendedJade;
 });
 
-Post.schema.virtual('content.getExtended').get(function() {
+Post.schema.virtual('content.extended').get(function() {
 	return this.content.extendedType ===  'html' && this.content.extendedHTML ||
 					this.content.extendedType ===  'markdown' && (this.content.extendedMarkdown && this.content.extendedMarkdown.html) ||
 					this.content.extendedType ===  'jade' && this.content.extendedJade;

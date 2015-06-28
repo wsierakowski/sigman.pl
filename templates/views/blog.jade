@@ -15,7 +15,8 @@ block content
 			else
 				- var cat = data.category ? 'Category: ' + data.category.name : null
 				- var tag = data.tag ? 'Tag: ' + data.tag.name : null
-				h2= cat || tag || 'Latest Posts'
+				- var search = filters.search ? 'Search for: ' + filters.search : null
+				h2= cat || tag || search || 'Latest Posts'
 				if data.posts.results.length
 					if data.posts.totalPages > 1
 						h5.text-weight-normal Showing 

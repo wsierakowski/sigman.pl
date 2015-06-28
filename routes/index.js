@@ -52,15 +52,10 @@ exports = module.exports = function(app) {
 	);
 	app.get(
 		//'/categories/:category?', 
-		myUtils.getUrl(urls.blog, urls.categories, ':category?'),
-		middleware.fetchCategories, 
-		middleware.fetchTags, 
-		middleware.fetchLatestPosts, 
-		routes.views.blog
-	);
-	app.get(
-		//'/tags/:tag?', 
-		myUtils.getUrl(urls.blog, urls.tags, ':tag?'),
+		[
+			myUtils.getUrl(urls.blog, urls.categories, ':category?'),
+			myUtils.getUrl(urls.blog, urls.tags, ':tag?')
+		],
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
