@@ -45,7 +45,7 @@ exports = module.exports = function(req, res) {
 	view.on('init', function(next) {
 		var q = keystone.list('Post').paginate({
 				page: req.query.page || 1,
-				perPage: locals.filters.search ? 100 : 10,
+				perPage: 10,
 				maxPages: 10
 			})
 			.where('state', 'published')
