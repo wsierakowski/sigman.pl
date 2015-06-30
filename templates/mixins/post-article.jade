@@ -1,7 +1,7 @@
 //- isBlogArticle means that the article will be printed for blog, 
 //- otherwise for single post display
 mixin post(isBlogArticle, post)
-	article
+	article.post-article
 		.post(data-ks-editable=editable(user, { list: 'Post', id: post.id }))
 			header
 				//- TODO h2: a(href=blogurl + '/post/' + post.slug)= post.title
