@@ -12,7 +12,7 @@ var keystone = require('keystone'),
 // and documentation.
 
 // WSi: setting the name before the init so that it is available for other init props
-keystone.set('name', 'sigman.pl');
+keystone.set('name', 'test.sigman.pl');
 
 keystone.init({
 	'brand': 'sigman.pl',

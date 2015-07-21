@@ -49,7 +49,7 @@ exports.initLocals = function(req, res, next) {
 			});
 		});
 
-		locals.navLinks.push({ label: 'About',    key: 'about',   href: myUtils.getUrl(urls.blog, 'about') });
+		// locals.navLinks.push({ label: 'About',    key: 'about',   href: myUtils.getUrl(urls.blog, 'about') });
 
 		locals.user = req.user;
 		next();
