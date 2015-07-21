@@ -4,15 +4,17 @@ require('dotenv').load();
 
 // Require keystone
 var keystone = require('keystone'),
+		utils = keystone.utils,
 		myUtils = require('./libs/myutils');
 
 // Initialise Keystone with your project's configuration.
 // See http://keystonejs.com/guide/config for available options
 // and documentation.
 
-keystone.init({
+// WSi: setting the name before the init so that it is available for other init props
+keystone.set('name', 'sigman.pl');
 
-	'name': 'sigman.pl',
+keystone.init({
 	'brand': 'sigman.pl',
 
 	'less': 'public',
@@ -27,10 +29,12 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
-	'cookie secret': '*WiIF3T-0w:2XJ-[H{WSc+7WA-_eIqS`8%E_RSqIt4(yo}QTw2l`Fbh_WZL9?g"G',
+	'cookie secret': process.env.COOKIE_SECRET,
 
-	'wysiwyg additional plugins': 'insertdatetime',
-	'wysiwyg additional buttons': 'insertdatetime'//,
+	'mongo': process.env.MONGO_URI + utils.slug(keystone.get('name')),
+
+	'wysiwyg additional plugins': 'insertdatetime, image',
+	'wysiwyg additional buttons': 'insertdatetime, image',
 
 	// 'wysiwyg override toolbar': false,
 	// 'wysiwyg menubar': true,

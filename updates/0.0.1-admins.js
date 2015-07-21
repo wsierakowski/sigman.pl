@@ -8,8 +8,12 @@
  */
 
 exports.create = {
-	User: [
-		{ 'name.first': 'Admin', 'name.last': 'User', email: 'wojciech@sierakowski.eu', password: 'nickless', isAdmin: true }
+	User: [{ 
+			email: process.env.ADMIN_EMAIL, 
+			password: process.env.ADMIN_PASSWORD, 
+			name: { first: process.env.ADMIN_FIRSTNAME, last: process.env.ADMIN_LASTNAME }, 
+			isAdmin: true 
+		}
 	]
 };
 
