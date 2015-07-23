@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Invoke the Forever module (to START sigman.pl KeystoneJS server).
+cd $(dirname $0)
+echo "The current working directory $PWD."
+
+forever \
+   start \
+   -al $PWD/logs/forever.log \
+   -ao $PWD/logs/out.log \
+   -ae $PWD/logs/err.log \
+   keystone.js
+
+# Invoke the Forever module (to START sigman.pl KeystoneJS server).
+# forever \
+#   start \
+#   -al $(dirname $0)/logs/forever.log \
+#   -ao $(dirname $0)/logs/out.log \
+#   -ae $(dirname $0)/logs/err.log \
+#   $(dirname $0)/keystone.js
