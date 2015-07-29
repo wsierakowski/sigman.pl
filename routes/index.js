@@ -48,6 +48,7 @@ exports = module.exports = function(app) {
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
+		middleware.fetchPopularPosts, 
 		routes.views.post
 	);
 	app.get(
@@ -59,6 +60,7 @@ exports = module.exports = function(app) {
 		middleware.fetchCategories, 
 		middleware.fetchTags, 
 		middleware.fetchLatestPosts, 
+		middleware.fetchPopularPosts, 
 		routes.views.blog
 	);
 	

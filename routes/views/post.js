@@ -26,8 +26,13 @@ exports = module.exports = function(req, res) {
 			// console.log('>>> result.content.extended: ', result.content.extended);
 			// TODO content.full === content.extended which is obviously wrong as it is missing brief
 			// console.log('>>> result.content.full: ', result.content.full);
+
+			result.hits++;
+
 			locals.data.post = result;
-			next(err);
+			result.save(function(err) {
+				next(err);
+			});
 		});
 		
 	});

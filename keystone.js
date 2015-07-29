@@ -31,7 +31,7 @@ keystone.init({
 	'user model': 'User',
 	'cookie secret': process.env.COOKIE_SECRET,
 
-	'mongo': process.env.MONGO_URI + utils.slug(keystone.get('name')),
+	'mongo': process.env.MONGO_URI + 'sigman-pl',
 
 	'wysiwyg additional plugins': 'insertdatetime, image',
 	'wysiwyg additional buttons': 'insertdatetime, image',

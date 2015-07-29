@@ -13,10 +13,13 @@ mixin post(isBlogArticle, post)
 					.article-icons-group1.col-sm-6.col-md-6
 						if post.publishedDate
 							span.glyphicon.glyphicon-time 
-							|  #{post._.publishedDate.format('MMMM Do, YYYY')}  
+							|  #{post._.publishedDate.format('MMMM Do, YYYY')}  &nbsp;&nbsp;
 						if post.author
 							span.glyphicon.glyphicon-user 
-							|  by #{post.author.name.first} 
+							|  by #{post.author.name.first}  &nbsp;&nbsp;
+						if post.hits
+							span.glyphicon.glyphicon-cloud-download 
+							|  #{post.hits} 
 					.article-icons-group2.col-sm-6.col-md-6
 						if post.categories && post.categories.length
 							span.glyphicon.glyphicon-folder-open 

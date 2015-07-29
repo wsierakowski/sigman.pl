@@ -166,3 +166,19 @@ exports.fetchLatestPosts = function(req, res, next) {
 		next(err);
 	});
 };
+
+// Load the posts
+exports.fetchPopularPosts = function(req, res, next) {
+	var locals = res.locals,
+		q = keystone.list('Post').model
+		.find()
+		.where('state', 'published')
+		.limit(5)
+		.sort('-hits')
+		.select('slug title hits');
+
+	q.exec(function(err, results) {
+		locals.data.popularPosts = results;
+		next(err);
+	});
+};

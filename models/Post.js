@@ -25,7 +25,8 @@ Post.add({
 		extendedJade: { type: Types.Code, language: 'jade', wysiwyg: true, height: 200, dependsOn: {'content.extendedType': 'jade'} }
 	},
 	categories: { type: Types.Relationship, ref: 'PostCategory', many: true },
-	tags: { type: Types.Relationship, ref: 'PostTag', many: true}
+	tags: { type: Types.Relationship, ref: 'PostTag', many: true},
+	hits: { type: Types.Number, default: 0}
 });
 
 Post.schema.virtual('content.full').get(function() {
