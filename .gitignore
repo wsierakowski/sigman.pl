@@ -1,3 +1,6 @@
+# Project specific
+ignore.*
+
 # Logs
 logs
 *.log

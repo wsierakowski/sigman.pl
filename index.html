@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RegExer @sigman.pl</title>
+  <style>
+    textarea#inTxt {
+      width: 550px;
+      height: 150px;
+    }
+    textarea#outExec {
+      width: 550px;
+      height: 150px;
+    }
+    input[type="text"]#inRgx {
+      width: 550px;
+    }
+    pre#outTxt {
+      width: 550px;
+      white-space: pre-wrap;
+    }
+    span.marker {
+      background-color: #fdd;
+      padding: 0px;
+      outline: 1px solid #f00;
+    }
+  </style>
+</head>
+<body>
+  <label>Input string:</label>
+  <br>
+  <textarea id="inTxt"></textarea>
+  <br>
+  <label>Flags:</label>
+  [<input type="checkbox" id="chGlob" checked> Global ]
+  [<input type="checkbox" id="chCase" checked> Case Insensitive ]
+  [<input type="checkbox" id="chMult" checked> Multiline ]
+  <br><br>
+  <label>Regex:</label>
+  <br>
+  <input type="text" id="inRgx"></input>
+  <!--br><br-->
+  <button type="button" id="runBtn" style="display: none">Run</button>
+  <br><hr><br>
+  <label>Exec results, [index, regex.lastIndex]:</label>
+  <br>
+  <textarea id="outExec" disabled></textarea>
+  <br><br>
+  <label>Matches highlighted on top of the input string:</label>
+  <pre id="outTxt"></pre>
+  <br>
+  <script src="app.js"></script>
+</body>
+</html>
