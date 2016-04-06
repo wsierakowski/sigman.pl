@@ -1,4 +1,5 @@
-var keystone = require('keystone');
+var keystone = require('keystone'),
+    cheerio = require('cheerio');
 
 exports = module.exports = function(req, res) {
 	
@@ -54,7 +55,13 @@ exports = module.exports = function(req, res) {
 	// });
 	
 	// Render the view
-	view.render('post');
+	view.render('post', null, function(err, html) {
+		var $ = cheerio.load(html);
+		if (!$('table').attr('class')) {
+			$('table').addClass('table table-condensed');
+	  }
+		res.send($.html());
+	});
 	
 };
 
